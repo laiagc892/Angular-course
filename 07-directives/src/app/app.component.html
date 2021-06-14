@@ -15,7 +15,28 @@
             {{ odd }}
           </li>
         </div>
-        <div *ngIf="!onlyOdd">
+        <!-- <div *ngIf="!onlyOdd">
+          <li
+            class="list-group-item"
+            [ngClass]="{odd: even % 2 !== 0}"
+            [ngStyle]="{backgroundColor: even % 2 !== 0 ? 'yellow' : 'transparents'}"
+            *ngFor="let even of evenNumbers">
+            {{ even }}
+          </li>
+        </div> -->
+        <!-- This is exactly the same code from above, behind the scenes this is what the star "*" transforms it to: -->
+        <!-- <ng-template [ngIf]="!onlyOdd">
+          <div>
+            <li
+              class="list-group-item"
+              [ngClass]="{odd: even % 2 !== 0}"
+              [ngStyle]="{backgroundColor: even % 2 !== 0 ? 'yellow' : 'transparents'}"
+              *ngFor="let even of evenNumbers">
+              {{ even }}
+            </li>
+          </div>
+        </ng-template> -->
+        <div *appUnless="onlyOdd">
           <li
             class="list-group-item"
             [ngClass]="{odd: even % 2 !== 0}"
@@ -25,11 +46,21 @@
           </li>
         </div>
       </ul>
+
       <p appBasicHighlight>Style me with basic directive!</p>
-      <p appBetterHighlight>Style me with better directive!</p>
-      <!-- <ng-template [ngIf]="onlyOdd">
-        <p>Only odd</p>
-      </ng-template> -->
+      <!-- <p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'red'">Style me with better directive!</p> -->
+      
+      <!-- Property binding in general:
+        Special case (if you pass down a string), you can take a shortcut: 
+        You can add property binding without square brackets if you then also omit the single quotation marks between the double quotation marks (This is still property binding, not a real attribute existing for the element you placed it on). -->
+      <p [appBetterHighlight]="'red'" defaultColor="yellow">Style me with better directive!</p>
+
+      <div [ngSwitch]="value">
+        <p *ngSwitchCase="5">Value is 5</p>
+        <p *ngSwitchCase="10">Value is 10</p>
+        <p *ngSwitchCase="100">Value is 100</p>
+        <p *ngSwitchDefault>Value is Default</p>
+      </div>
     </div>
   </div>
 </div>
