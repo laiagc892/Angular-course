@@ -1,19 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-
-import { AccountsService } from './accounts.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  accounts: {name: string, status: string}[] = [];
+export class AppComponent {
+  accounts = [
+    {
+      name: 'Master Account',
+      status: 'active'
+    },
+    {
+      name: 'Testaccount',
+      status: 'inactive'
+    },
+    {
+      name: 'Hidden Account',
+      status: 'unknown'
+    }
+  ];
 
-  constructor(private accountsService: AccountsService) {}
+  onAccountAdded(newAccount: {name: string, status: string}) {
+    this.accounts.push(newAccount);
+  }
 
-  ngOnInit() {
-    this.accounts = this.accountsService.accounts;
-    // "accountsService.accounts" is an array, it is a reference type. So by setting it equal here, we're actually getting access to the exact same array as stored in the service
+  onStatusChanged(updateInfo: {id: number, newStatus: string}) {
+    this.accounts[updateInfo.id].status = updateInfo.newStatus;
   }
 }
