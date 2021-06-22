@@ -44,7 +44,8 @@ export class PostsService {
         {
           headers: new HttpHeaders({ 'Custom-header': 'Hello' }),
           // params: new HttpParams().set('print', 'pretty')  // To set just one query param key-pair.
-          params: searchParams  // Multiple query params.
+          params: searchParams,  // Multiple query params.
+          responseType: 'json'
         }
       )
       .pipe(
@@ -68,7 +69,9 @@ export class PostsService {
   deletePosts() {
     return this.http.delete(
       'https://angular-course-49b92-default-rtdb.europe-west1.firebasedatabase.app/posts.json', {
-        observe: 'events'
+        observe: 'events',
+        responseType: 'json'  // json is the default type, also there is 'text', 'blob'(for files)...
+        // It is used when you don't want Angular to parse it to a Javascript object (json).
       })
       .pipe(
         tap(event => {
